@@ -9,92 +9,138 @@ const bookschema =mongoose.model('book');
 
 
 // create a function to get all books
-exports.getAllBooks = (request, response) => {
-    response.status(200).json({ data:"get all book" });
+exports.getAllBooks = (request, response,next) => {
+    bookSchema
+        .find({})
+        .then((books) => {
+            response.status(200).json({ data: books });
+        }
+        )
+        .catch((error) => next(error))
 }
 
 // create a function to get book by id
 exports.getBookById = (request, response) => {
-    response.status(200).json({ data:"get book by id" });
+    bookSchema
+        .findById(request.params.id)
+        .then((book) => {
+            response.status(200).json({ data: book });
+        }
+        )
+        .catch((error) => next(error))
 }
 
 // create a function to add book
 
 exports.addBook = (request, response) => {
-    response.status(200).json({ data:"add book" });
+    new bookSchema({
+        _id:request.body.ID,
+        category: request.body.category,
+        auther: request.body.auther,
+        title: request.body.title,
+        publisher: request.body.publisher,
+        publishingDate: request.body.publishingDate,
+        edition: request.body.edition,
+        pages: request.body.pages,
+        shelfNo: request.body.shelfNo,
+        noOfCopies: request.body.noOfCopies,
+    })
+        .save()
+        .then((book) => {
+            response.status(201).json({ data: book });
+        }
+        )
+        .catch((error) => next(error))
 }
 
 // create a function to update book by id
 
 exports.updateBookById = (request, response) => {
-    response.status(200).json({ data:"update book by id" });
+    bookSchema
+    .updateOne
+    (
+        {_id:request.params.id},
+        {
+            $set:
+            {
+                category: request.body.category,
+                auther: request.body.auther,
+                title: request.body.title,
+                publisher: request.body.publisher,
+                publishingDate: request.body.publishingDate,
+                edition: request.body.edition,
+                pages: request.body.pages,
+                shelfNo: request.body.shelfNo,
+                noOfCopies: request.body.noOfCopies,
+            }
+        }
+    
+    )
+    .then((book) => {
+        response.status(200).json({ data: book });
+    }
+    )
+    .catch((error) => next(error))
 }
 
 // create a function to delete book by id
 
 exports.deleteBookById = (request, response) => {
-    response.status(200).json({ data:"delete book by id" });
+    bookSchema
+        .deleteOne({_id:request.params.id})
+        .then((book) => {
+            response.status(200).json({ data: book });
+        }
+        )
+        .catch((error) => next(error))
 }
 
 // create a function to get book by category
 
 exports.getBookByCategory = (request, response) => {
-
-    response.status(200).json({ data:"get book by category" });
+    bookSchema 
+        .find({category:request.params.category})
+        .then((book) => {
+            response.status(200).json({ data: book });
+        }
+        )
+        .catch((error) => next(error))
 }
 
 // create a function to get book by auther
 
 exports.getBookByAuther = (request, response) => {
-
-    response.status(200).json({ data:"get book by auther" });
+    bookSchema 
+        .find({auther:request.params.auther})
+        .then((book) => {
+            response.status(200).json({ data: book });
+        }
+        )
+        .catch((error) => next(error))
 }
 
 // create a function to get book by title
 
 exports.getBookByTitle = (request, response) => {
     
-        response.status(200).json({ data:"get book by title" });
+    bookSchema 
+        .find({title:request.params.title})
+        .then((book) => {
+            response.status(200).json({ data: book });
+        }
+        )
+        .catch((error) => next(error))
     }
 
 // create a function to get book by publisher
 
 exports.getBookByPublisher = (request, response) => {
-
-    response.status(200).json({ data:"get book by publisher" });
+    bookSchema
+        .find({publisher:request.params.publisher})
+        .then((book) => {
+            response.status(200).json({ data: book });
+        }
+        )
+        .catch((error) => next(error))
 }
 
-// create a function to get book by publishing date
-
-exports.getBookByPublishingDate = (request, response) => {
-
-    response.status(200).json({ data:"get book by publishing date" });
-}
-
-// create a function to get book by edition
-
-exports.getBookByEdition = (request, response) => {
-
-    response.status(200).json({ data:"get book by edition" });
-}
-
-// create a function to get book by pages
-
-exports.getBookByPages = (request, response) => {
-
-    response.status(200).json({ data:"get book by pages" });
-}
-
-// create a function to get book by shelf no
-
-exports.getBookByShelfNo = (request, response) => {
-
-    response.status(200).json({ data:"get book by shelf no" });
-}
-
-// create a function to get book by no of copies
-
-exports.getBookByNoOfCopies = (request, response) => {
-
-    response.status(200).json({ data:"get book by no of copies" });
-}
