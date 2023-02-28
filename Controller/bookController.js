@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // import bookSchema
-const bookSchema = require('../Model/bookModel');
+require('../Model/bookModel');
 
 // book schema
 const bookschema =mongoose.model('book');
@@ -10,7 +10,7 @@ const bookschema =mongoose.model('book');
 
 // create a function to get all books
 exports.getAllBooks = (request, response,next) => {
-    bookSchema
+    bookschema
         .find({})
         .then((books) => {
             response.status(200).json({ data: books });
@@ -21,7 +21,7 @@ exports.getAllBooks = (request, response,next) => {
 
 // create a function to get book by id
 exports.getBookById = (request, response) => {
-    bookSchema
+    bookschema
         .findById(request.params.id)
         .then((book) => {
             response.status(200).json({ data: book });
@@ -33,7 +33,7 @@ exports.getBookById = (request, response) => {
 // create a function to add book
 
 exports.addBook = (request, response) => {
-    new bookSchema({
+    new bookschema({
         _id:request.body.ID,
         category: request.body.category,
         auther: request.body.auther,
@@ -56,7 +56,7 @@ exports.addBook = (request, response) => {
 // create a function to update book by id
 
 exports.updateBookById = (request, response) => {
-    bookSchema
+    bookschema
     .updateOne
     (
         {_id:request.params.id},
@@ -86,7 +86,7 @@ exports.updateBookById = (request, response) => {
 // create a function to delete book by id
 
 exports.deleteBookById = (request, response) => {
-    bookSchema
+    bookschema
         .deleteOne({_id:request.params.id})
         .then((book) => {
             response.status(200).json({ data: book });
@@ -98,7 +98,7 @@ exports.deleteBookById = (request, response) => {
 // create a function to get book by category
 
 exports.getBookByCategory = (request, response) => {
-    bookSchema 
+    bookschema 
         .find({category:request.params.category})
         .then((book) => {
             response.status(200).json({ data: book });
@@ -110,7 +110,7 @@ exports.getBookByCategory = (request, response) => {
 // create a function to get book by auther
 
 exports.getBookByAuther = (request, response) => {
-    bookSchema 
+    bookschema 
         .find({auther:request.params.auther})
         .then((book) => {
             response.status(200).json({ data: book });
@@ -123,7 +123,7 @@ exports.getBookByAuther = (request, response) => {
 
 exports.getBookByTitle = (request, response) => {
     
-    bookSchema 
+    bookschema 
         .find({title:request.params.title})
         .then((book) => {
             response.status(200).json({ data: book });
@@ -135,7 +135,7 @@ exports.getBookByTitle = (request, response) => {
 // create a function to get book by publisher
 
 exports.getBookByPublisher = (request, response) => {
-    bookSchema
+    bookschema
         .find({publisher:request.params.publisher})
         .then((book) => {
             response.status(200).json({ data: book });
